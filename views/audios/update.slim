@@ -1,0 +1,6 @@
+h1 Update 
+
+form action="/api/audios/#{result["audioId"]}/update" method="post"
+    input type="text" name="audio" value="#{result["Title"]}"/
+    input type="number" name="authorId" value="#{result["authorId"]}"/
+    input type="submit" value="Update Audio Book"

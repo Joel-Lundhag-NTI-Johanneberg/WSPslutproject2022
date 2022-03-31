@@ -1,0 +1,12 @@
+h1 All Audio books
+
+
+ol
+  - audioBooks.each do |audio|
+    li 
+      a href="audios/#{audio['AudioId']}" #{audio["Title"]}
+      a href="audios/#{audio["AudioId"]}/update" Updatera 
+      a href="/api/audios/#{audio["AudioId"]}/delete" Delete
+      
+      
+            
