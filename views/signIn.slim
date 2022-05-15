@@ -1,4 +1,11 @@
 h1 Logga in
-input type="text" /
-input type="password"/
-input type="submit"/
+form action="/signIn" method="post" 
+    input type="text" name="username" /
+    input type="password" name="password" /
+    input type="submit" value="Sign In"/
+    
+-if session[:loginattempt] != nil 
+    -if session[:loginattempt] > 0
+        h2 User not found
+        p Please check if the spelling of username and password are correct
+        p=session[:signinerror]

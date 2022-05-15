@@ -2,13 +2,17 @@ require 'sinatra'
 require "sinatra/contrib"
 require 'slim'
 require 'sqlite3'
+require "bcrypt"
+require_relative "dbHandler.rb"
+
+enable :sessions
 
 configure :production, :development do
   register Sinatra::Reloader
   set :port, 3000
 end
 
-get('/')  do
+get('/')  do 
   slim(:start)
 end 
 
@@ -16,7 +20,6 @@ get('/audios') do
   db = SQLite3::Database.new("db/audioBooks.db")
   db.results_as_hash = true
   result = db.execute("SELECT * FROM audios")
-  p result
   slim(:"audios/index",locals:{audioBooks:result})
 end
 
@@ -71,3 +74,9 @@ get("/signIn") do
   slim(:"signIn", locals:{})
 end
 
+
+post("/signIn") do
+  username = params[:username]
+  password = params[:password]
+  login(username,password)
+end
