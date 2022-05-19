@@ -4,7 +4,7 @@ h1 All Audio books
 ol
   - audioBooks.each do |audio|
     li 
-      a href="audios/#{audio['audioId']}" #{audio["Title"]}
+      a href="audios/#{audio["audioId"]}" #{audio["Title"]}
       - if session[:role_id]
         - if session[:role_id] > 0
           a href="audios/#{audio["audioId"]}/update" Updatera 
