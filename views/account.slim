@@ -3,3 +3,11 @@
         p #{user["name"]}
         p #{user["email"]}
     p #{user["reviews"]}
+    h2 Recensioner:
+    - if reviews.length > 0
+        - for i in 0..reviews.length - 1 do
+            div.review
+                p #{reviews[i]["reviewer"]}
+                p #{reviews[i]["review"]}
+
+    

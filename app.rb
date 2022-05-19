@@ -31,7 +31,7 @@ post("/api/audios/:id/add") do
   id = params[:id].to_i
   db = SQLite3::Database.new("db/audioBooks.db")
   db.results_as_hash = true
-  result = db.execute("INSERT INTO audios (Title, AuthorId) VALUES (?, ?)", params[:audioBook], params[:authorId])
+  result = db.execute("INSERT INTO audios (Title, authorId) VALUES (?, ?)", params[:audioBook], params[:authorId])
   redirect("/audios")
 end
 
@@ -39,7 +39,7 @@ get("/api/audios/:id/delete") do
   id = params[:id].to_i
   db = SQLite3::Database.new("db/audioBooks.db")
   db.results_as_hash = true
-  result = db.execute("DELETE FROM audios WHERE AudioBookId = ?", id).first
+  result = db.execute("DELETE FROM audios WHERE audioId = ?", id).first
   redirect("/audios")
 end
 
@@ -47,7 +47,7 @@ get("/audios/:id/update") do
   id = params[:id].to_i
   db = SQLite3::Database.new("db/audioBooks.db")
   db.results_as_hash = true
-  result = db.execute("SELECT * FROM audioBooks WHERE AudioBookId = ?",id).first
+  result = db.execute("SELECT * FROM audios WHERE audioId = ?",id).first
   slim(:"audios/update", locals:{result:result})
 end
 
@@ -55,7 +55,7 @@ post("/api/audios/:id/update") do
   id = params[:id].to_i
   db = SQLite3::Database.new("db/audioBooks.db")
   db.results_as_hash = true
-  result = db.execute("UPDATE audioBooks SET Title = ?, AuthorId = ? WHERE AudioBookId = ?", params[:audioBook], params[:authorId], id)
+  result = db.execute("UPDATE audios SET Title = ?, AuthorId = ? WHERE id = ?", params[:audioBook], params[:authorId], id)
   redirect("/audios")
 end
 
@@ -109,5 +109,6 @@ get("/account") do
   db = SQLite3::Database.new("db/audioBooks.db")
   db.results_as_hash = true
   user = db.execute("SELECT * FROM users WHERE id = ?",session[:id]).first
-  slim(:"account", locals:{user:user})
+  reviews = db.execute("SELECT * FROM reviews WHERE userId = ?",session[:id])
+  slim(:"account", locals:{user:user, reviews:reviews})
 end

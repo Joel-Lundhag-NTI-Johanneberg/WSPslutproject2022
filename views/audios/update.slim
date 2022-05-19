@@ -1,6 +1,9 @@
 h1 Update 
+- if session[:role_id] && session[:role_id] > 0
+    form action="/api/audios/#{result["audioId"]}/update" method="post"
+        input type="text" name="audio" value="#{result["Title"]}"/
+        input type="number" name="authorId" value="#{result["authorId"]}"/
+        input type="submit" value="Update Audio Book"
 
-form action="/api/audios/#{result["audioId"]}/update" method="post"
-    input type="text" name="audio" value="#{result["Title"]}"/
-    input type="number" name="authorId" value="#{result["authorId"]}"/
-    input type="submit" value="Update Audio Book"
+- else
+    a href="/" Här ska du inte vara, gå tillbaka

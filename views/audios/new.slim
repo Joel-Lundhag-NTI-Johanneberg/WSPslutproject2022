@@ -1,4 +1,8 @@
+- if session[:role_id] && session[:role_id] > 0
     form action="/api/albums/:id/add" method="post"
         input type="text" name="album"/
         input type="number" name="artistId"/
         input type="submit" value="Add album"
+
+- else
+    a href="/" Här ska du inte vara, gå tillbaka

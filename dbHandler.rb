@@ -56,7 +56,4 @@ def signUp(username,email,password,password_confirm)
 def newReview(review, userId, audioId, username)
     db = connect_to_db()
     db.execute("INSERT INTO reviews (review, userId, audioId, reviewer) VALUES (?, ?, ?, ?)", review, userId, audioId, username)
-    p userId
-    reviewsssss = db.execute("SELECT reviews FROM users WHERE id = ?", userId)
-    p reviewsssss "HEWWLLEWLP PÅADLPÅSAÅDASPÅ"
 end
