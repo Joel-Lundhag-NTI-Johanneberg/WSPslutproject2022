@@ -1,0 +1,13 @@
+form action="/signUp" method="POST" 
+    input type="text" name="username" placeholder="enter username"
+    input type="text" name="email" placeholder="enter email"
+    input type="password" name="password" placeholder="enter password"
+    input type="password" name="password_confirm" placeholder="enter password again"
+    input type="submit" value="Skapa nytt konto"
+
+
+-if session[:regattempt] != nil 
+    -if session[:regattempt] > 0
+        h2 Passwords don't match
+        p please try again
+        p #{session[:regattempt_error]}

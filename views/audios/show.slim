@@ -1,4 +1,18 @@
-h1 = result
+h1 #{audio["Title"]}
+p Skribent: #{author["Name"]}.
 
-p Albumet som du har sökt efter heter #{result["Title"]}.
-p Artisten som du har sökt efter heter #{artist["Name"]}.
+
+h2 Recensioner:
+- if reviews.length > 0
+    - for i in 0..reviews.length - 1 do
+        div.review
+            p #{reviews[i]["reviewer"]}
+            p #{reviews[i]["review"]}
+- else
+    p Inga Recensioner än
+
+- if session[:role_id]
+    p Skapa en ny recension: 
+    form action="/audios/#{audio['audioId']}" method="post" 
+        input type="text" name="review" placeholder="Skriv din recension här!"
+        input type="submit" value="Skapa recension"

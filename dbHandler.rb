@@ -7,7 +7,7 @@ def connect_to_db()
     db = SQLite3::Database.new("db/audioBooks.db")
 end
 
-def login(username,password)
+def signIn(username,password)
     db = connect_to_db()
     db.results_as_hash = true
     session[:loginattempt]=0 if Time.new.to_i - session[:last_attempt].to_i > 300
@@ -16,8 +16,6 @@ def login(username,password)
         return redirect('/signIn')
     end
     result = db.execute("SELECT * FROM users WHERE name = ?",username).first
-    p result
-    p "wew"
     if result==nil 
         session[:loginattempt] +=1
         session[:last_attempt] = Time.now
@@ -26,11 +24,11 @@ def login(username,password)
     dbPassword = result["password"]
     id = result["id"]
     
-    p BCrypt::Password.new(dbPassword) == password
     if BCrypt::Password.new(dbPassword) == password
         session[:id]= id
         session[:username] = username
         session[:email] = result["email"]
+        session[:role_id] = result["role_id"]
         session[:loginattempt] = nil
         session[:signinerror] = ""
         return redirect('/')
@@ -39,4 +37,26 @@ def login(username,password)
         session[:last_attempt] = Time.now
         return redirect('/signIn')
     end
+end
+
+def signUp(username,email,password,password_confirm)    
+        regattempt=0
+            if (password == password_confirm)
+        dbPassword = BCrypt::Password.create(password)
+        db = connect_to_db()
+        db.execute("INSERT INTO users (name, password, reviews, listend, liked, email, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)",username, dbPassword, "[]", "[]", "[]",email, 0)
+        regattempt = nil
+        return regattempt
+        else
+        regattempt +=1
+        return regattempt
+        end
+    end
+
+def newReview(review, userId, audioId, username)
+    db = connect_to_db()
+    db.execute("INSERT INTO reviews (review, userId, audioId, reviewer) VALUES (?, ?, ?, ?)", review, userId, audioId, username)
+    p userId
+    reviewsssss = db.execute("SELECT reviews FROM users WHERE id = ?", userId)
+    p reviewsssss "HEWWLLEWLP PÅADLPÅSAÅDASPÅ"
 end

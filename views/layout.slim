@@ -11,7 +11,13 @@ html lang="en"
     nav
       a href="/" Hem
       a href="/audios" Visa alla böcker
-      a href="/audios/new" Lägg till bok
-      a href="/signIn" Logga in
+      - if session[:id]
+        - if session[:role_id] > 0
+          a href="/audios/new" Lägg till bok
+        a href="/account" Konto
+        a href="/signOut" Logga ut
+      - else
+        a href="/signIn" Logga in
+        a href="/signUp" Skapa Konto
     ==yield
   
