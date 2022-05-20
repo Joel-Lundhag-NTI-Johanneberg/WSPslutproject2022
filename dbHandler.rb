@@ -1,7 +1,5 @@
 def connect_to_db()
     db = SQLite3::Database.new("db/audioBooks.db")
-    db.results_as_hash = true
-
 end
 
 # Quick and dirty way of signing in a user whilst also having some kind of rudementary warning system
@@ -47,7 +45,7 @@ def signUp(username,email,password,password_confirm)
         if (password == password_confirm)
             dbPassword = BCrypt::Password.create(password)
             db = connect_to_db()
-            db.execute("INSERT INTO users (name, password, reviews, listend, liked, email, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)",username, dbPassword, "[]", "[]", "[]",email, 0)
+            db.execute("INSERT INTO users (name, password, listend, liked, email, role_id) VALUES (?, ?, ?, ?, ?, ?)",username, dbPassword, "[]", "[]",email, 0)
         end
 end
 

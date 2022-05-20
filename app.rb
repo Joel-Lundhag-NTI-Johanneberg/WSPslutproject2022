@@ -25,11 +25,11 @@ get('/audios/new') do
 end
 
 # Creates audioBook and adds it to database
-post("/api/audios/:id/add") do 
+post("/api/audios/add") do 
   id = params[:id].to_i
   db = SQLite3::Database.new("db/audioBooks.db")
   db.results_as_hash = true
-  result = db.execute("INSERT INTO audios (Title, authorId) VALUES (?, ?)", params[:audioBook], params[:authorId])
+  result = db.execute("INSERT INTO audios (Title, authorId) VALUES (?, ?)", params[:audio], params[:authorId])
   redirect("/audios")
 end
 
@@ -56,7 +56,7 @@ post("/api/audios/:id/update") do
   id = params[:id].to_i
   db = SQLite3::Database.new("db/audioBooks.db")
   db.results_as_hash = true
-  result = db.execute("UPDATE audios SET Title = ?, AuthorId = ? WHERE id = ?", params[:audioBook], params[:authorId], id)
+  result = db.execute("UPDATE audios SET Title = ?, AuthorId = ? WHERE audioId = ?", params[:audio], params[:authorId], id)
   redirect("/audios")
 end
 
